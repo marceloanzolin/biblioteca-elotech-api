@@ -1,13 +1,13 @@
-package com.elotech.biblioteca_elotech_api;
+package com.elotech.biblioteca;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BibliotecaElotechApiApplication {
+public class BibliotecaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BibliotecaElotechApiApplication.class, args);
+		SpringApplication.run(BibliotecaApplication.class, args);
 	}
 
 }

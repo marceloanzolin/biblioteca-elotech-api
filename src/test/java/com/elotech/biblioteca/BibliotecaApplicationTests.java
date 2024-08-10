@@ -1,10 +1,10 @@
-package com.elotech.biblioteca_elotech_api;
+package com.elotech.biblioteca;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BibliotecaElotechApiApplicationTests {
+class BibliotecaApplicationTests {
 
 	@Test
 	void contextLoads() {
