@@ -7,5 +7,5 @@ CREATE TABLE emprestimos (
 	status VARCHAR(50) NOT NULL,
 	FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE RESTRICT,
     FOREIGN KEY (livro_id) REFERENCES livros(id) ON DELETE RESTRICT,
-    CONSTRAINT check_status CHECK (status IN ('ATIVO', 'DEVOLVIDO'))
+    CONSTRAINT check_status CHECK (status IN ('ATIVO', 'FINALIZADO'))
 )

@@ -1,4 +1,4 @@
-package com.elotech.biblioteca.entity.statics;
+package com.elotech.biblioteca.entity.Enum;
 
 import com.elotech.biblioteca.exception.RegraNegocioException;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,7 +47,7 @@ public enum Categoria {
             }
         }
         throw new RegraNegocioException("Categoria " + name
-                + "não encontrada. Escolha uma das categorias disponíveis: " + Categoria.getListName());
+                + " não encontrada. Escolha uma das categorias disponíveis: " + Categoria.getListName());
     }
 
     public static List<Categoria> toList() {

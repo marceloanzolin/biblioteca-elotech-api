@@ -1,6 +1,6 @@
 package com.elotech.biblioteca.entity;
 
-import com.elotech.biblioteca.entity.statics.Categoria;
+import com.elotech.biblioteca.entity.Enum.Categoria;
 import com.elotech.biblioteca.entity.validation.ValidIsbn;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;

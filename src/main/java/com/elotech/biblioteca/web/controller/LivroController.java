@@ -24,7 +24,7 @@ public class LivroController {
     private PagedResourcesAssembler<Livro> pagedResourcesAssembler;
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Livro usuarioById(@PathVariable Integer id ){
+    public Livro findById(@PathVariable Integer id ){
             return livroService.findById(id) ;
     }
 

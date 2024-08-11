@@ -4,6 +4,7 @@ import com.elotech.biblioteca.dao.UsuarioDao;
 import com.elotech.biblioteca.entity.Usuario;
 import com.elotech.biblioteca.exception.RegraNegocioException;
 import com.elotech.biblioteca.service.UsuarioService;
+import com.elotech.biblioteca.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario save(Usuario usuario) {
         try {
+            usuario.setTelefone(StringUtil.somenteNumeros(usuario.getTelefone()));
             return usuarioDao.save(usuario);
         } catch (Exception e) {
             throw new RegraNegocioException(HttpStatus.BAD_REQUEST, e.getMessage());

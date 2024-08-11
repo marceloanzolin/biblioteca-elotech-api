@@ -2,6 +2,7 @@ package com.elotech.biblioteca.service.impl;
 
 import com.elotech.biblioteca.dao.LivroDao;
 import com.elotech.biblioteca.dao.specs.LivroSpecs;
+import com.elotech.biblioteca.entity.Enum.Categoria;
 import com.elotech.biblioteca.entity.Livro;
 import com.elotech.biblioteca.exception.RegraNegocioException;
 import com.elotech.biblioteca.service.LivroService;
@@ -70,5 +71,9 @@ public class LivroServiceImpl implements LivroService {
                 .and(autor != null ? LivroSpecs.autorLike(autor) : null)
                 .and(isbn != null ? LivroSpecs.isbnEqual(isbn) : null);
         return livroDao.findAll(livroSpecification, pageable);
+    }
+
+    public List<Livro> getByCategoria(List<Categoria> listCategoria){
+        return livroDao.getByCategoria(listCategoria);
     }
 }
