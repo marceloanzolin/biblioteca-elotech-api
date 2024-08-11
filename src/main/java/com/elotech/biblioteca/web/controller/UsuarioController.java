@@ -7,24 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/usuarios/")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     @Autowired
     UsuarioService usuarioService;
 
-    @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Usuario usuarioById(@PathVariable Integer id ){
-        return usuarioService
-                .findById(id)
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Usuário não encontrado"));
+        return usuarioService.findById(id) ;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -38,30 +33,21 @@ public class UsuarioController {
         return usuarioService.findAll();
     }
 
-    @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update( @PathVariable Integer id,
-                        @RequestBody Usuario usuario ){
-        usuarioService
-                .findById(id)
-                .map( usuarioEncontrado -> {
-                    usuario.setId(usuarioEncontrado.getId());
-                    usuarioService.save(usuario);
-                    return usuarioEncontrado;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Usuário não encontrado") );
+                        @Valid @RequestBody Usuario usuario ){
+
+            Usuario usuarioEncontrado = usuarioService.findById(id);
+            usuario.setId(usuarioEncontrado.getId());
+            usuarioService.save(usuario);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id){
-            usuarioService.findById(id)
-                    .map(cliente -> {
-                        usuarioService.deleteById(id);
-                        return cliente;
-                    }).orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Usuário não encontrado")
-                    );
+            usuarioService.findById(id);
+            usuarioService.deleteById(id);
     }
 
 }

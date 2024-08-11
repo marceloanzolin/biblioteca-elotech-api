@@ -3,6 +3,7 @@ package com.elotech.biblioteca.web.controller;
 import com.elotech.biblioteca.exception.RegraNegocioException;
 import com.elotech.biblioteca.web.ApiErrors;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -15,10 +16,10 @@ import java.util.stream.Collectors;
 public class ApplicationControllerAdvice {
 
     @ExceptionHandler(RegraNegocioException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiErrors handleNegocioException(RegraNegocioException ex){
+    public ResponseEntity<ApiErrors> handleNegocioException(RegraNegocioException ex){
         String mensagemErro = ex.getMessage();
-        return new ApiErrors(mensagemErro);
+        ApiErrors apiErrors = new ApiErrors(mensagemErro);
+        return new ResponseEntity<>(apiErrors,ex.getHttpStatus());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
