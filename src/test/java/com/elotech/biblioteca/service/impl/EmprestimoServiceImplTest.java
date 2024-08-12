@@ -4,8 +4,6 @@ import com.elotech.biblioteca.converter.EmprestimoConverter;
 import com.elotech.biblioteca.dao.EmprestimoDao;
 import com.elotech.biblioteca.dto.EmprestimoDTO;
 import com.elotech.biblioteca.entity.Emprestimo;
-import com.elotech.biblioteca.entity.Livro;
-import com.elotech.biblioteca.entity.enums.Categoria;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
