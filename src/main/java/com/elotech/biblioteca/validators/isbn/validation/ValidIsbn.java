@@ -13,5 +13,6 @@ import java.lang.annotation.*;
 public @interface ValidIsbn {
     String message() default "O ISBN deve conter 10 ou 13 caracteres";
     Class<?>[] groups() default {};
-    Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {
+    };
 }

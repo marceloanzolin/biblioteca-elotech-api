@@ -40,7 +40,6 @@ public class GoogleBooksServiceImpl implements GoogleBooksService {
         } catch (Exception e) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "Erro ao buscar as informações do livro na api do Google Books", e);
         }
-
     }
 
     @Override

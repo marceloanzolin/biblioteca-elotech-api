@@ -5,5 +5,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface RecomendacaoService {
-    public Page<Recomendacao> obterRecomendados(Integer idUsuario, Pageable pageable);
+    Page<Recomendacao> obterRecomendados(Integer idUsuario, Pageable pageable);
 }

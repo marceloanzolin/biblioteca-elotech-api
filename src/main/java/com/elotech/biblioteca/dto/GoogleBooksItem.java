@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @JsonIgnoreProperties
 public class GoogleBooksItem {
-
     @JsonProperty("volumeInfo")
     private GoogleBooksVolumeInfo googleBooksVolumeInfo;
 }
