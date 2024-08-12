@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @ExtendWith(MockitoExtension .class)
-class UsuarioDTOServiceImplTest {
+class UsuarioServiceImplTest {
 
     @InjectMocks
     private UsuarioServiceImpl usuarioServiceImpl;
