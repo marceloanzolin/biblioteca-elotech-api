@@ -1,6 +1,6 @@
-package com.elotech.biblioteca.entity.validator;
+package com.elotech.biblioteca.validators.isbn.validator;
 
-import com.elotech.biblioteca.entity.validation.ValidIsbn;
+import com.elotech.biblioteca.validators.isbn.validation.ValidIsbn;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

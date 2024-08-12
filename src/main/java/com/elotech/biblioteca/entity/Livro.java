@@ -1,25 +1,25 @@
 package com.elotech.biblioteca.entity;
 
-import com.elotech.biblioteca.entity.Enum.Categoria;
-import com.elotech.biblioteca.entity.validation.ValidIsbn;
+import com.elotech.biblioteca.entity.enums.Categoria;
+import com.elotech.biblioteca.validators.isbn.validation.ValidIsbn;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name ="livros")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Setter
+@Builder
 public class Livro {
 
     @Id
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -33,6 +33,7 @@ public class Livro {
     @NotEmpty(message = "Informe o autor do livro")
     private String autor;
 
+    @Setter
     @ValidIsbn
     @Column(name = "isbn")
     @NotEmpty(message = "Informe o ISBN do livro")

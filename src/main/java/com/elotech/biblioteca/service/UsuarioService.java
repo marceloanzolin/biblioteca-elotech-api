@@ -3,11 +3,10 @@ package com.elotech.biblioteca.service;
 import com.elotech.biblioteca.entity.Usuario;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UsuarioService {
-    public Usuario findById(Integer id);
-    public Usuario save(Usuario usuario);
-    public List<Usuario> findAll();
-    public void deleteById(Integer id);
+    Usuario findById(Integer id);
+    Usuario save(Usuario usuario);
+    List<Usuario> findAll();
+    void deleteById(Integer id);
 }

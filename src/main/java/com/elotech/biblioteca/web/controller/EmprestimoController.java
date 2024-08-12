@@ -2,7 +2,8 @@ package com.elotech.biblioteca.web.controller;
 
 import com.elotech.biblioteca.entity.Emprestimo;
 import com.elotech.biblioteca.service.EmprestimoService;
-import com.elotech.biblioteca.web.dto.EmprestimoPatchDTO;
+import com.elotech.biblioteca.dto.EmprestimoPatch;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -14,10 +15,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/emprestimos")
+@Tag(name = "Emprestimo Controller", description = "Gerencia as operações relacionadas ao empréstimos dos livros aos usuários")
 public class EmprestimoController {
 
     @Autowired
-    EmprestimoService emprestimoService;
+    private EmprestimoService emprestimoService;
 
     @Autowired
     private PagedResourcesAssembler<Emprestimo> pagedResourcesAssembler;
@@ -40,9 +42,7 @@ public class EmprestimoController {
 
     @PatchMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateEmprestimo(@PathVariable Integer id,
-                       @RequestBody EmprestimoPatchDTO emprestimoPatchDTO){
-            emprestimoService.updateEmprestimo(id, emprestimoPatchDTO);
+    public void updateEmprestimo(@PathVariable Integer id, @RequestBody EmprestimoPatch emprestimoPatch){
+            emprestimoService.update(id, emprestimoPatch);
     }
-
 }

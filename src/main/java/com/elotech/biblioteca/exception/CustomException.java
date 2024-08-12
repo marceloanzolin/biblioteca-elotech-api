@@ -3,17 +3,17 @@ package com.elotech.biblioteca.exception;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-public class RegraNegocioException extends RuntimeException{
+public class CustomException extends RuntimeException{
 
     @Getter
     private final HttpStatus httpStatus;
 
-    public RegraNegocioException(HttpStatus httpStatus, String messageError){
+    public CustomException(HttpStatus httpStatus, String messageError){
         super(messageError);
         this.httpStatus = httpStatus;
     }
 
-    public RegraNegocioException(String message){
+    public CustomException(String message){
         super(message);
         this.httpStatus = HttpStatus.BAD_REQUEST;
     }

@@ -1,8 +1,7 @@
 package com.elotech.biblioteca.service;
 
-import com.elotech.biblioteca.entity.Enum.Categoria;
+import com.elotech.biblioteca.entity.enums.Categoria;
 import com.elotech.biblioteca.entity.Livro;
-import com.elotech.biblioteca.entity.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,4 +16,5 @@ public interface LivroService {
      Optional<Livro> findByIsbn(String isbn);
      Page<Livro> findAll(String titulo, String autor, String isbn, Pageable pageable);
      List<Livro> getByCategoria(List<Categoria> listCategoria);
+
 }

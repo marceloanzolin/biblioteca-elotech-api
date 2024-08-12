@@ -1,6 +1,6 @@
-package com.elotech.biblioteca.entity.Enum;
+package com.elotech.biblioteca.entity.enums;
 
-import com.elotech.biblioteca.exception.RegraNegocioException;
+import com.elotech.biblioteca.exception.CustomException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -37,7 +37,7 @@ public enum StatusEmprestimo {
                 return status;
             }
         }
-        throw new RegraNegocioException("Status " + name
+        throw new CustomException("Status " + name
                 + " não encontrado. Status disponíveis: " + StatusEmprestimo.getListName());
     }
 

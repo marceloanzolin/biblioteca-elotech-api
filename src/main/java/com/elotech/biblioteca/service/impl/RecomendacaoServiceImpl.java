@@ -1,12 +1,12 @@
 package com.elotech.biblioteca.service.impl;
 
 import com.elotech.biblioteca.entity.Emprestimo;
-import com.elotech.biblioteca.entity.Enum.Categoria;
+import com.elotech.biblioteca.entity.enums.Categoria;
 import com.elotech.biblioteca.entity.Livro;
 import com.elotech.biblioteca.service.EmprestimoService;
 import com.elotech.biblioteca.service.LivroService;
 import com.elotech.biblioteca.service.RecomendacaoService;
-import com.elotech.biblioteca.web.dto.RecomendacaoDTO;
+import com.elotech.biblioteca.dto.Recomendacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,7 +25,7 @@ public class RecomendacaoServiceImpl implements RecomendacaoService {
     LivroService livroService;
 
     @Override
-    public Page<RecomendacaoDTO> obterRecomendados(Integer idUsuario, Pageable pageable) {
+    public Page<Recomendacao> obterRecomendados(Integer idUsuario, Pageable pageable) {
 
         List<Emprestimo> listaEmprestados = emprestimoService.findByIdUsuario(idUsuario);
 
@@ -42,15 +42,14 @@ public class RecomendacaoServiceImpl implements RecomendacaoService {
                                     .noneMatch(le -> le.getLivro().getId().equals(lc.getId()) &&
                                             le.getLivro().getCategoria().equals(lc.getCategoria())))
                 .toList();
-
-        List<RecomendacaoDTO> livrosRecomendados = criarRecomendacaoDTOS(livrosDisponiveis);
+        List<Recomendacao> livrosRecomendados = criarRecomendacaoDTO(livrosDisponiveis);
 
         return new PageImpl <>(livrosRecomendados,pageable,livrosRecomendados.size());
     }
 
-    private static List<RecomendacaoDTO> criarRecomendacaoDTOS(List<Livro> livrosDisponiveis) {
+    private static List<Recomendacao> criarRecomendacaoDTO(List<Livro> livrosDisponiveis) {
         return livrosDisponiveis.stream()
-                .map(livro -> RecomendacaoDTO.builder()
+                .map(livro -> Recomendacao.builder()
                         .titulo(livro.getTitulo())
                         .autor(livro.getAutor())
                         .isbn(livro.getIsbn())

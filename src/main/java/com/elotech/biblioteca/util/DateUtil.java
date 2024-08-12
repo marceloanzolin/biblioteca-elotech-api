@@ -10,4 +10,8 @@ public final class DateUtil {
     public static String localDateFormater(LocalDate localDate) {
         return localDate.format(DATE_FORMATTER);
     }
+
+    public static LocalDate stringToDate(String date, DateTimeFormatter formatter) {
+        return LocalDate.parse(date, formatter);
+    }
 }

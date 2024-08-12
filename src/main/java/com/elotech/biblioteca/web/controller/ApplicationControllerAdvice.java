@@ -1,6 +1,6 @@
 package com.elotech.biblioteca.web.controller;
 
-import com.elotech.biblioteca.exception.RegraNegocioException;
+import com.elotech.biblioteca.exception.CustomException;
 import com.elotech.biblioteca.web.ApiErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
 
-    @ExceptionHandler(RegraNegocioException.class)
-    public ResponseEntity<ApiErrors> handleNegocioException(RegraNegocioException ex){
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ApiErrors> handleNegocioException(CustomException ex){
         String mensagemErro = ex.getMessage();
         ApiErrors apiErrors = new ApiErrors(mensagemErro);
         return new ResponseEntity<>(apiErrors,ex.getHttpStatus());

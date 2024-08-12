@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EmprestimoDao extends JpaRepository<Emprestimo,Integer>, JpaSpecificationExecutor<Emprestimo> {
-
     @Query("SELECT emp FROM Emprestimo emp left join fetch emp.livro where emp.usuario.id = :idUsuario")
     public List<Emprestimo> findByIdUsuario(Integer idUsuario);
 }

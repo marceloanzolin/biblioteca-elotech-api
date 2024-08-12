@@ -2,9 +2,9 @@ package com.elotech.biblioteca.service.impl;
 
 import com.elotech.biblioteca.dao.EmprestimoDao;
 import com.elotech.biblioteca.entity.Emprestimo;
-import com.elotech.biblioteca.exception.RegraNegocioException;
+import com.elotech.biblioteca.exception.CustomException;
 import com.elotech.biblioteca.service.EmprestimoService;
-import com.elotech.biblioteca.web.dto.EmprestimoPatchDTO;
+import com.elotech.biblioteca.dto.EmprestimoPatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,12 +15,12 @@ import java.util.List;
 public class EmprestimoServiceImpl implements EmprestimoService {
 
     @Autowired
-    EmprestimoDao emprestimoDao;
+    private EmprestimoDao emprestimoDao;
 
     @Override
     public Emprestimo findById(Integer id) {
         return emprestimoDao.findById(id).orElseThrow(() ->
-                new  RegraNegocioException(HttpStatus.NOT_FOUND,
+                new CustomException(HttpStatus.NOT_FOUND,
                         "Empréstimo não encontrado"));
     }
 
@@ -29,20 +29,20 @@ public class EmprestimoServiceImpl implements EmprestimoService {
         try {
             return  emprestimoDao.save(emprestimo);
         } catch (Exception e) {
-            throw new RegraNegocioException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new CustomException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
     @Override
     public List<Emprestimo> findAll() {
-       return emprestimoDao.findAll();
+        return emprestimoDao.findAll();
     }
 
     @Override
-    public void updateEmprestimo(Integer id, EmprestimoPatchDTO emprestimoPatchDTO) {
+    public void update(Integer id, EmprestimoPatch emprestimoPatch) {
         Emprestimo emprestimo = this.findById(id);
-        emprestimo.setStatus(emprestimoPatchDTO.getStatus());
-        emprestimo.setDataDevolucao(emprestimoPatchDTO.getDataDevolucao());
+        emprestimo.setStatus(emprestimoPatch.getStatus());
+        emprestimo.setDataDevolucao(emprestimoPatch.getDataDevolucao());
         save(emprestimo);
     }
 

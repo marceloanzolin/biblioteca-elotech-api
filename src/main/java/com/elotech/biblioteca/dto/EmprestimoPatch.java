@@ -1,6 +1,6 @@
-package com.elotech.biblioteca.web.dto;
+package com.elotech.biblioteca.dto;
 
-import com.elotech.biblioteca.entity.Enum.StatusEmprestimo;
+import com.elotech.biblioteca.entity.enums.StatusEmprestimo;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
@@ -10,8 +10,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class EmprestimoPatchDTO {
-
+public class EmprestimoPatch {
     @Enumerated(EnumType.STRING)
     private StatusEmprestimo status;
     private LocalDate dataDevolucao;

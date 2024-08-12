@@ -1,6 +1,6 @@
-package com.elotech.biblioteca.entity.Enum;
+package com.elotech.biblioteca.entity.enums;
 
-import com.elotech.biblioteca.exception.RegraNegocioException;
+import com.elotech.biblioteca.exception.CustomException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -22,7 +22,7 @@ public enum Categoria {
     ARTES("Artes"),
     LITERATURA("Literatura"),
     HISTORIA_GEOGRAFIA("História e Geografia"),
-    OUTRAS("Outros");
+    OUTRAS("Outras");
 
     private final String description;
 
@@ -46,7 +46,7 @@ public enum Categoria {
                 return categoria;
             }
         }
-        throw new RegraNegocioException("Categoria " + name
+        throw new CustomException("Categoria " + name
                 + " não encontrada. Escolha uma das categorias disponíveis: " + Categoria.getListName());
     }
 

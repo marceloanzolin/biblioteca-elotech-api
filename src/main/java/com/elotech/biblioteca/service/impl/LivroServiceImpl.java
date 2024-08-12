@@ -2,9 +2,9 @@ package com.elotech.biblioteca.service.impl;
 
 import com.elotech.biblioteca.dao.LivroDao;
 import com.elotech.biblioteca.dao.specs.LivroSpecs;
-import com.elotech.biblioteca.entity.Enum.Categoria;
+import com.elotech.biblioteca.entity.enums.Categoria;
 import com.elotech.biblioteca.entity.Livro;
-import com.elotech.biblioteca.exception.RegraNegocioException;
+import com.elotech.biblioteca.exception.CustomException;
 import com.elotech.biblioteca.service.LivroService;
 import com.elotech.biblioteca.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,34 +24,25 @@ public class LivroServiceImpl implements LivroService {
     LivroDao livroDao;
 
     @Override
+    public Livro findById(Integer id) {
+        return livroDao.findById(id).orElseThrow(() ->
+                new CustomException(HttpStatus.NOT_FOUND,
+                        "Livro não encontrado"));
+    }
+
+    @Override
     public Livro save(Livro livro) {
         try {
             livro.setIsbn(StringUtil.somenteNumeros(livro.getIsbn()));
             if(livro.getId() == null) {
                 livroDao.findByIsbn(livro.getIsbn()).ifPresent((l) -> {
-                    throw new RegraNegocioException(HttpStatus.BAD_REQUEST,
+                    throw new CustomException(HttpStatus.BAD_REQUEST,
                             "ISBN já cadastrado");
                 });
             }
             return livroDao.save(livro);
         }catch (Exception e) {
-            throw new RegraNegocioException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-    }
-
-    @Override
-    public Livro findById(Integer id) {
-            return livroDao.findById(id).orElseThrow(() ->
-                    new  RegraNegocioException(HttpStatus.NOT_FOUND,
-                            "Livro não encontrado"));
-    }
-
-    @Override
-    public void deleteById(Integer id) {
-        try {
-            livroDao.deleteById(id);
-        } catch (Exception e) {
-           throw new RegraNegocioException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new CustomException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
@@ -60,6 +51,14 @@ public class LivroServiceImpl implements LivroService {
         return livroDao.findAll();
     }
 
+    @Override
+    public void deleteById(Integer id) {
+        try {
+            livroDao.deleteById(id);
+        } catch (Exception e) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
     public Optional<Livro> findByIsbn(String isbn){
         return livroDao.findByIsbn(isbn);
     }
