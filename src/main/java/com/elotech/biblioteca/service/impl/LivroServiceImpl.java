@@ -1,7 +1,10 @@
 package com.elotech.biblioteca.service.impl;
 
+import com.elotech.biblioteca.converter.LivroConverter;
+import com.elotech.biblioteca.converter.UsuarioConverter;
 import com.elotech.biblioteca.dao.LivroDao;
 import com.elotech.biblioteca.dao.specs.LivroSpecs;
+import com.elotech.biblioteca.dto.LivroDTO;
 import com.elotech.biblioteca.entity.enums.Categoria;
 import com.elotech.biblioteca.entity.Livro;
 import com.elotech.biblioteca.exception.CustomException;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LivroServiceImpl implements LivroService {
@@ -23,15 +27,19 @@ public class LivroServiceImpl implements LivroService {
     @Autowired
     LivroDao livroDao;
 
+    @Autowired
+    private LivroConverter livroConverter;
+
     @Override
-    public Livro findById(Integer id) {
-        return livroDao.findById(id).orElseThrow(() ->
+    public LivroDTO findById(Integer id) {
+        Livro livro = livroDao.findById(id).orElseThrow(() ->
                 new CustomException(HttpStatus.NOT_FOUND,
                         "Livro não encontrado"));
+        return livroConverter.toDto(livro);
     }
 
     @Override
-    public Livro save(Livro livro) {
+    public LivroDTO save(Livro livro) {
         try {
             livro.setIsbn(StringUtil.somenteNumeros(livro.getIsbn()));
             if(livro.getId() == null) {
@@ -40,15 +48,11 @@ public class LivroServiceImpl implements LivroService {
                             "ISBN já cadastrado");
                 });
             }
-            return livroDao.save(livro);
+            Livro livroSalvo = livroDao.save(livro);
+            return livroConverter.toDto(livro);
         }catch (Exception e) {
             throw new CustomException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-    }
-
-    @Override
-    public List<Livro> findAll() {
-        return livroDao.findAll();
     }
 
     @Override
@@ -64,12 +68,14 @@ public class LivroServiceImpl implements LivroService {
     }
 
     @Override
-    public Page<Livro> findAll(String titulo, String autor, String isbn, Pageable pageable) {
+    public Page<LivroDTO> findAll(String titulo, String autor, String isbn, Pageable pageable) {
         Specification<Livro> livroSpecification = Specification
                 .where(titulo != null ? LivroSpecs.tituloLike(titulo) : null)
                 .and(autor != null ? LivroSpecs.autorLike(autor) : null)
-                .and(isbn != null ? LivroSpecs.isbnEqual(isbn) : null);
-        return livroDao.findAll(livroSpecification, pageable);
+                .and(isbn != null ? LivroSpecs.isbnEqual(StringUtil.somenteNumeros(isbn)) : null);
+
+        Page<Livro> pageLivro =  livroDao.findAll(livroSpecification, pageable);
+        return pageLivro.map((p) -> livroConverter.toDto(p));
     }
 
     public List<Livro> getByCategoria(List<Categoria> listCategoria){

@@ -1,4 +1,4 @@
-package com.elotech.biblioteca.service.google.dto;
+package com.elotech.biblioteca.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

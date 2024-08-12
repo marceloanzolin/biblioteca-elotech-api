@@ -1,6 +1,7 @@
 package com.elotech.biblioteca.service.impl;
 
 import com.elotech.biblioteca.dao.EmprestimoDao;
+import com.elotech.biblioteca.dto.EmprestimoDTO;
 import com.elotech.biblioteca.entity.Emprestimo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ class EmprestimoServiceImplTest {
         Emprestimo emprestimo = new Emprestimo();
         emprestimo.setId(1);
         Mockito.when(emprestimoDao.findById(Mockito.anyInt())).thenReturn(Optional.of(emprestimo));
-        Emprestimo result = emprestimoService.findById(1);
+        EmprestimoDTO result = emprestimoService.findById(1);
         Assertions.assertEquals(1, result.getId());
     }
 }

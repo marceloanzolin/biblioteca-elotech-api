@@ -17,4 +17,9 @@ public class CustomException extends RuntimeException{
         super(message);
         this.httpStatus = HttpStatus.BAD_REQUEST;
     }
+
+    public CustomException(HttpStatus httpStatus, String messageError, Throwable cause){
+        super(messageError,cause);
+        this.httpStatus = httpStatus;
+    }
 }

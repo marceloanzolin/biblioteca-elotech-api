@@ -7,11 +7,11 @@ public final class DateUtil {
 
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public static String localDateFormater(LocalDate localDate) {
+    public static String localDateToString(LocalDate localDate) {
         return localDate.format(DATE_FORMATTER);
     }
 
-    public static LocalDate stringToDate(String date, DateTimeFormatter formatter) {
+    public static LocalDate stringToLocalDate(String date, DateTimeFormatter formatter) {
         return LocalDate.parse(date, formatter);
     }
 }

@@ -1,5 +1,7 @@
 package com.elotech.biblioteca.web.controller;
 
+import com.elotech.biblioteca.converter.UsuarioConverter;
+import com.elotech.biblioteca.dto.UsuarioDTO;
 import com.elotech.biblioteca.entity.Usuario;
 import com.elotech.biblioteca.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,12 +10,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -23,6 +27,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private UsuarioConverter usuarioConverter;
+
     @Operation(description = "Obter os dados de um usuário pelo seu código de identificação")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Usuário encontrado"),
@@ -31,7 +38,7 @@ public class UsuarioController {
     })
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Usuario usuarioById(@PathVariable
+    public UsuarioDTO usuarioById(@PathVariable
                                @Parameter(description = "ID do usuário") Integer id ){
         return usuarioService.findById(id) ;
     }
@@ -43,7 +50,7 @@ public class UsuarioController {
     })
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario save( @RequestBody @Valid Usuario usuario ){
+    public UsuarioDTO save( @RequestBody @Valid Usuario usuario ){
         return usuarioService.save(usuario);
     }
 
@@ -54,8 +61,8 @@ public class UsuarioController {
     })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public List<Usuario> findAll() {
-        return usuarioService.findAll();
+    public List<UsuarioDTO> findAll() {
+         return usuarioService.findAll();
     }
 
     @Operation(description = "Atualiza as informações de um usuário")
@@ -70,7 +77,7 @@ public class UsuarioController {
                         @Parameter(description = "ID do usuário") Integer id,
                         @Valid @RequestBody Usuario usuario ){
 
-            Usuario usuarioEncontrado = usuarioService.findById(id);
+            UsuarioDTO usuarioEncontrado = usuarioService.findById(id);
             usuario.setId(usuarioEncontrado.getId());
             usuarioService.save(usuario);
     }

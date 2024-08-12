@@ -1,5 +1,6 @@
 package com.elotech.biblioteca.web.controller;
 
+import com.elotech.biblioteca.dto.LivroDTO;
 import com.elotech.biblioteca.entity.Livro;
 import com.elotech.biblioteca.service.LivroService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +29,10 @@ public class LivroController {
     private LivroService livroService;
 
     @Autowired
-    private PagedResourcesAssembler<Livro> pagedResourcesAssembler;
+    private PagedResourcesAssembler<LivroDTO> pagedResourcesAssembler;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Operation(description = "Obter os dados de um livro pelo seu código de identificação")
     @ApiResponses({
@@ -37,7 +42,7 @@ public class LivroController {
     })
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Livro findById(
+    public LivroDTO findById(
             @PathVariable
             @Parameter(description = "ID do livro") Integer id){
             return livroService.findById(id) ;
@@ -50,7 +55,7 @@ public class LivroController {
     })
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Livro save( @RequestBody
+    public LivroDTO save( @RequestBody
                        @Valid Livro livro){
             return livroService.save(livro);
     }
@@ -66,7 +71,7 @@ public class LivroController {
     public void update( @PathVariable @Parameter(description = "ID do livro") Integer id,
                         @Valid
                         @RequestBody Livro livro ){
-        Livro livroEncontrado = livroService.findById(id);
+        LivroDTO livroEncontrado = livroService.findById(id);
         livro.setId(livroEncontrado.getId());
         livroService.save(livro);
     }
@@ -92,14 +97,14 @@ public class LivroController {
     })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public PagedModel<EntityModel<Livro>> findAll(@RequestParam(required = false)
+    public PagedModel<EntityModel<LivroDTO>> findAll(@RequestParam(required = false)
                                                   @Parameter(description = "Titulo do livro") String titulo,
                                                   @RequestParam(required = false)
                                                   @Parameter(description = "Autor do livro") String autor,
                                                   @RequestParam(required = false)
                                                   @Parameter(description = "Isbn  do livro") String isbn,
                                                   @Parameter(description = "Informações referentes a paginação e ordenação da lista") Pageable pageable){
-        Page<Livro> page =  livroService.findAll(titulo, autor, isbn, pageable);
+        Page<LivroDTO> page =  livroService.findAll(titulo, autor, isbn, pageable);
         return pagedResourcesAssembler.toModel(page);
     }
 }

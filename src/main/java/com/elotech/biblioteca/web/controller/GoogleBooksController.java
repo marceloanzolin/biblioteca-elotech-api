@@ -1,9 +1,10 @@
 package com.elotech.biblioteca.web.controller;
 
+import com.elotech.biblioteca.dto.LivroDTO;
 import com.elotech.biblioteca.entity.Livro;
 import com.elotech.biblioteca.service.GoogleBooksService;
-import com.elotech.biblioteca.service.google.dto.GoogleBooksRequest;
-import com.elotech.biblioteca.service.google.dto.GoogleBooksResponse;
+import com.elotech.biblioteca.dto.GoogleBooksRequest;
+import com.elotech.biblioteca.dto.GoogleBooksResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -37,7 +38,7 @@ public class GoogleBooksController {
 
     @Operation(description = "Adiciona um livro encontrado no Google Books na biblioteca")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Livro addBook(@RequestBody GoogleBooksRequest googleBooksRequest){
+    public LivroDTO addBook(@RequestBody GoogleBooksRequest googleBooksRequest){
         return googleBooksService.addBook(googleBooksRequest);
     }
 }

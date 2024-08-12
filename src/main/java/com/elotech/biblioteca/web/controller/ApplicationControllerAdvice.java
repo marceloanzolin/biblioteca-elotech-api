@@ -16,9 +16,10 @@ import java.util.stream.Collectors;
 public class ApplicationControllerAdvice {
 
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ApiErrors> handleNegocioException(CustomException ex){
+    public ResponseEntity<ApiErrors> handleCustomException(CustomException ex){
         String mensagemErro = ex.getMessage();
-        ApiErrors apiErrors = new ApiErrors(mensagemErro);
+        String cause = ex.getCause() != null ? ex.getCause().getMessage() : "Causa não informada" ;
+        ApiErrors apiErrors = new ApiErrors(mensagemErro,cause);
         return new ResponseEntity<>(apiErrors,ex.getHttpStatus());
     }
 

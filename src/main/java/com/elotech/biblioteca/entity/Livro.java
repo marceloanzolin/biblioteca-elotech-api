@@ -15,11 +15,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 public class Livro {
 
     @Id
-    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -33,7 +33,6 @@ public class Livro {
     @NotEmpty(message = "Informe o autor do livro")
     private String autor;
 
-    @Setter
     @ValidIsbn
     @Column(name = "isbn")
     @NotEmpty(message = "Informe o ISBN do livro")

@@ -1,4 +1,4 @@
-package com.elotech.biblioteca.service.google.dto;
+package com.elotech.biblioteca.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

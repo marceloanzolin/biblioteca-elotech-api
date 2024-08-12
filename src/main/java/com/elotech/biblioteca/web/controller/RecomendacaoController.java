@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/recomendacoes")
-@Tag(name = "Recomendação Controllee", description = "Gerencia as informações relacionadas as recomendações de locação para os usuários")
+@Tag(name = "Recomendação Controller", description = "Gerencia as informações relacionadas as recomendações de locação para os usuários")
 public class RecomendacaoController {
 
     @Autowired
